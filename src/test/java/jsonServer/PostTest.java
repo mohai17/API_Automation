@@ -105,4 +105,29 @@ public class PostTest {
 
     }
 
+    @Test
+    public void updatePostShouldSucceed(){
+
+        Map<String, String> json = new HashMap<>();
+
+        json.put("name",LoremIpsum.getInstance().getName());
+        json.put("city",LoremIpsum.getInstance().getCity());
+        json.put("email",LoremIpsum.getInstance().getEmail());
+
+        given().baseUri(baseURL)
+                .port(3000)
+                .contentType(ContentType.JSON)
+                .body(json)
+                .log().uri()
+                .log().body()
+                .when()
+                .put("posts/2")
+                .then()
+                .log().body()
+                .statusCode(200);
+
+
+
+    }
+
 }
