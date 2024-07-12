@@ -6,13 +6,12 @@ import org.testng.annotations.Test;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
 
-public class PostTest {
+public class StaticTest {
 
     String baseURL = "http://localhost:3000/";
 
