@@ -1,11 +1,8 @@
 package jsonServer;
 
-import com.thedeanda.lorem.LoremIpsum;
 import io.restassured.http.ContentType;
 import org.testng.annotations.Test;
 
-import java.util.HashMap;
-import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
@@ -15,8 +12,8 @@ public class StaticTest {
 
     String baseURL = "http://localhost:3000/";
 
-    @Test
-    public void getPostShouldSucceed(){
+    @Test(priority = 0)
+    public void getPostShouldSucceed() {
 
         given().baseUri(baseURL)
                 .log().uri()
@@ -27,23 +24,23 @@ public class StaticTest {
 
     }
 
-    @Test
-    public void getPostDetailShouldSucceed(){
+    @Test(priority = 1)
+    public void getPostDetailShouldSucceed() {
 
         given().baseUri(baseURL)
                 .log().uri()
                 .when().get("posts/1")
                 .then()
                 .log().body().statusCode(200)
-                .body("id",equalTo("1"))
-                .body("title",equalTo("a title"))
-                .body("views",equalTo(100));
+                .body("id", equalTo("1"))
+                .body("title", equalTo("a title"))
+                .body("views", equalTo(100));
 
 
     }
 
-    @Test
-    public void getPostDetail_2_ShouldSucceed(){
+    @Test(priority = 2)
+    public void getPostDetail_2_ShouldSucceed() {
 
         given()
                 .baseUri(baseURL)
@@ -52,14 +49,14 @@ public class StaticTest {
                 .then()
                 .log().body()
                 .statusCode(200)
-                .body("id",equalTo("2"))
-                .body("title",equalTo("another title"))
-                .body("views",equalTo(200));
+                .body("id", equalTo("2"))
+                .body("title", equalTo("another title"))
+                .body("views", equalTo(200));
 
     }
 
-    @Test
-    public void postPostShouldSucceed(){
+    @Test(priority = 3)
+    public void postPostShouldSucceed() {
 
         String json = "    {\n" +
                 "        \"roll\": \"3\",\n" +
@@ -81,75 +78,57 @@ public class StaticTest {
 
     }
 
-    @Test
-    public void postPost_2_ShouldSucceed(){
+    @Test(priority = 4)
+    public void putPostShouldSucceed() {
 
-        Map<String, String> json = new HashMap<>();
+        String json = "  {\n" +
+                "    \"id\": \"1\",\n" +
+                "    \"email\": \"example@mail.com\",\n" +
+                "    \"views\": 100\n" +
+                "  }";
 
-        json.put("title", LoremIpsum.getInstance().getTitle(3));
-        json.put("name", LoremIpsum.getInstance().getName());
-        json.put("city", LoremIpsum.getInstance().getCity());
-
-        given().baseUri(baseURL)
+        given()
+                .baseUri(baseURL)
                 .port(3000)
                 .contentType(ContentType.JSON)
                 .body(json)
-                .log().uri()
                 .log().body()
                 .when()
-                .post("posts")
-                .then()
-                .statusCode(201)
-                .log().body();
-
-    }
-
-    @Test
-    public void updatePostShouldSucceed(){
-
-        Map<String, String> json = new HashMap<>();
-
-        json.put("name",LoremIpsum.getInstance().getName());
-        json.put("city",LoremIpsum.getInstance().getCity());
-        json.put("email",LoremIpsum.getInstance().getEmail());
-
-        given().baseUri(baseURL)
-                .port(3000)
-                .contentType(ContentType.JSON)
-                .body(json)
-                .log().uri()
-                .log().body()
-                .when()
-                .put("posts/2")
+                .put("posts/1")
                 .then()
                 .log().body()
                 .statusCode(200);
 
 
-
     }
 
-    @Test
-    public void deletePostShouldSucceed(){
+    @Test(priority = 5)
+    public void patchPostShouldSucceed() {
 
-        Map<String, String> json = new HashMap<>();
-
-        json.put("name",LoremIpsum.getInstance().getName());
-        json.put("city",LoremIpsum.getInstance().getCity());
-        json.put("email",LoremIpsum.getInstance().getEmail());
+        String json = "{\"views\":\"3050\"}";
 
         given().baseUri(baseURL)
                 .port(3000)
                 .contentType(ContentType.JSON)
                 .body(json)
-                .log().uri()
                 .log().body()
                 .when()
-                .delete("posts/2")
+                .patch("posts/2")
                 .then()
                 .log().body()
                 .statusCode(200);
 
+    }
+
+    @Test(priority = 6)
+    public void deletePostShouldSucceed() {
+        given().baseUri(baseURL)
+                .port(3000)
+                .contentType(ContentType.JSON)
+                .when()
+                .delete("posts/1")
+                .then()
+                .statusCode(200);
     }
 
 }
