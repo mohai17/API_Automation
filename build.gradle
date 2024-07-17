@@ -10,15 +10,19 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'io.rest-assured:rest-assured:5.5.0'
-    testImplementation 'io.rest-assured:json-path:5.5.0'
-    testImplementation 'io.rest-assured:xml-path:5.5.0'
-    testImplementation 'io.rest-assured:json-schema-validator:5.5.0'
-    // https://mvnrepository.com/artifact/com.thedeanda/lorem
-    testImplementation 'com.thedeanda:lorem:2.1'
+    testImplementation 'io.rest-assured:rest-assured:5.4.0'
+    testImplementation 'io.rest-assured:json-path:5.4.0'
+    testImplementation 'io.rest-assured:xml-path:5.4.0'
+    testImplementation 'io.rest-assured:json-schema-validator:5.4.0'
+
     // https://mvnrepository.com/artifact/org.testng/testng
     testImplementation 'org.testng:testng:7.10.2'
 
+    // https://mvnrepository.com/artifact/com.thedeanda/lorem
+    testImplementation 'com.thedeanda:lorem:2.2'
+
+    // https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
+    testImplementation 'com.googlecode.json-simple:json-simple:1.1.1'
 
 }
 
